@@ -1,10 +1,12 @@
 import os
 
 import mysql.connector
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from mysql.connector import Error
-import dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
