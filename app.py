@@ -14,17 +14,23 @@ frontend_origins = [
     origin.strip()
     for origin in os.getenv(
         "FRONTEND_ORIGINS",
-        "http://localhost:5500,http://127.0.0.1:5500",
+        "http://localhost:5500,http://127.0.0.1:5500", 
+        #freontend_originsiin tallennetaan frontendin osoite
+        #jos osoite olisi esim. eri portissa samalla serverillä 
+        # tai kokonaan eri serverillä, niin tähän täsmennettäisiin frontendin osoite
     ).split(",")
     if origin.strip()
 ]
-CORS(app, resources={r"/api/*": {"origins": frontend_origins}})
+CORS(app, resources={r"/api/*": {"origins": frontend_origins}}) 
+
 
 UPSERT_LOADS_SQL = """
 INSERT INTO page_load_counter (id, total_loads)
 VALUES (1, %s)
 ON DUPLICATE KEY UPDATE total_loads = total_loads + %s
 """
+
+#
 
 
 def get_database_connection():
@@ -37,7 +43,7 @@ def get_database_connection():
     )
 
 
-@app.post("/api/loads")
+@app.post("/api/loads") #rajapinnan osoite
 def record_loads():
     payload = request.get_json(silent=True)
     loads = payload.get("loads") if isinstance(payload, dict) else None
